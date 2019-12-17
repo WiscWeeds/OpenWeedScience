@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Open Weed Science</title>
+    <link>/</link>
+    <description>Recent content on Open Weed Science</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>One-Way ANOVA for Percentage Weed Control Data</title>
+      <link>/post/2019/12/31/one-way-anova-for-percentage-weed-control-data/</link>
+      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/12/31/one-way-anova-for-percentage-weed-control-data/</guid>
+      <description>Background Assessments of visual weed control in response to herbicide treatments is likely the most common experiment and data analysis conducted within the Weed Science discipline. The goal of these experiments is to investigate herbicides that promote the best level of control of targeted weed species. These experiments are usually organized in a one-way randomized complete block design with multiple treatments (herbicides). At a pre-established number of days after treatment (DAT; researcher choice), a percent (%) visual control rate is given to each targeted weed.</description>
+    </item>
+    
+    <item>
+      <title>Crop-Weed Competition in Additive Design</title>
+      <link>/post/2019/12/10/crop-weed-competition-in-additive-design/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/12/10/crop-weed-competition-in-additive-design/</guid>
+      <description>Background Crop–weed competition is extensively studied in weed science. The additive design, in which weed density varies and the crop density is kept constant, is the most commonly utilized design in plant competition studies. The additive design is important to calculate economic weed thresholds and improve weed control decision-making.
+ Getting started  Download R for your laptop system/desktop from: https://www.r-project.org  R is a programming language and free software environment for statistical computing and graphics supported by the R Foundation for Statistical Computing.</description>
+    </item>
+    
+    <item>
+      <title>Using RStudio for Visualization and Analysis of Weed Science Experiments</title>
+      <link>/post/2019/12/10/using-rstudio-for-visualization-and-analysis-of-weed-science-experiments/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2019/12/10/using-rstudio-for-visualization-and-analysis-of-weed-science-experiments/</guid>
+      <description>A RStudio symposia was conducted at the 74th North Central Weed Science Society (NCWSS) Meeting in Columbus, OH on December 11, 2019. Thanks to Ethann Barnes for putting together the RStudio symposia and NCWSS committee members for accepting our proposal.
+The following topics were presented:
+Title: Basics of R and RStudio. Presenter: Dr. Ethann R. Barnes, University of Nebraska-Lincoln Title: Data wrangling with dplyr. Presenter: Dr. Maxwel C. Oliveira, University of Wisconsin-Madison Title: An introduction to using R for weed population dynamics modeling.</description>
+    </item>
+    
+    <item>
+      <title>Contribute to Our Community</title>
+      <link>/contribute/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/contribute/</guid>
+      <description>The Open Weed Science accepts contents from weed scientists around the globe to be published in the website, https://www.openpweedsci.org/.
+We accept contents that improve our knowledge and reproducibility in weed research topics related to:
+  Data analysis
+  Data Visualization
+  Teaching materials
+  Statistics
+  Modeling
+  Bioinformatics
+  Data Science
+  To help ensure the quality of these materials, we ask that they be peer-reviewed by qualified members of the Open Weed Science community.</description>
+    </item>
+    
+    <item>
+      <title>Open</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Who are we? Under development
+Mission Under development
+Values Under development
+Members    Member Role Domain(s) Institute Country Contact     Maxwel C Oliveira Leadership Modeling, Data Visualization University of Wisconsin-Madison USA maxoliveira@wisc.edu   Brendan C S Alexander Member Modeling, Applied Statistics University of Illinois-UC USA bca2@illinois.edu   Ethann R Barnes Member Modeling GreenLight Biosciences, Inc. USA    Lucas K Bobadilla Member Bioinformatics University of Illinois-UC USA lucask3@illinois.</description>
+    </item>
+    
+  </channel>
+</rss>
