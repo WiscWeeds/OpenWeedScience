@@ -22,7 +22,7 @@ We accept contents that improve our knowledge and reproducibility in weed resear
 - Data Science
 
 
-To help ensure the quality of these materials, we ask that they be peer-reviewed by qualified members of the Open Weed Science community. Moreover, contributors could share data analysis presented in a published manuscript. 
+To help ensure the quality of these materials, we ask that they be peer-reviewed by qualified members of the Open Weed Science community. Moreover, contributors could share data analysis published in a peer-reviewed journal. 
 
 
 # How to contribute?

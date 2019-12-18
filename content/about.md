@@ -1,21 +1,21 @@
 ---
-title: Open 
+title: Open Weed Science
 ---
 
-# Who are we?
+# About Open Weed Science
 
 Under development
 
 
-# Mission
+# Statement of Purpose
 
-Under development
+**Inform**:  Under development
 
-# Values
+**Mission**: Under development
 
-Under development
+**Values**: Under development
 
-# Members
+# The Open Weed Science Team
 
 
 | Member                | Role       | Domain(s)                     | Institute                       | Country | Contact               |
