@@ -41,7 +41,7 @@ paginate = 6
 [params]
     description = "A website built through Hugo and blogdown."
     summary_length = 300
-    github_edit = "https://github.com/yihui/hugo-xmag/edit/master/exampleSite/content/"
+    github_edit = "https://github.com/openweedsci/OpenWeedScience/edit/master/content/"
     footer = "&copy; [Open Weed Science](https://openweedsci.org) 2019 | [Github](https://github.com/openweedsci) | [Twitter](https://twitter.com/openweedsci)"
 
 [params.text]
