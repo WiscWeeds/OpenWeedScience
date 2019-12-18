@@ -6,24 +6,24 @@
     <description>Recent content in Categories on Open Weed Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Dec 2019 21:13:14 -0500</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Posts</title>
-      <link>/categories/posts/</link>
-      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      <title>Post</title>
+      <link>/categories/post/</link>
+      <pubDate>Fri, 20 Dec 2019 21:13:14 -0500</pubDate>
       
-      <guid>/categories/posts/</guid>
+      <guid>/categories/post/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Talks &amp; Workshops</title>
       <link>/categories/talks-workshops/</link>
-      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 11 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/talks-workshops/</guid>
       <description></description>
