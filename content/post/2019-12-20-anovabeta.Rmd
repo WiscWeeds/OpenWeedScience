@@ -113,7 +113,7 @@ Levene's Test of the null that the variances amongst herbicide treatments are th
 
 - Levene’s test is robust to departures from normality.
 
-> fligner.test function
+> leveneTest function
 
 ```{r warning=FALSE}
 leveneTest(weedcont$control,  weedcont$herbicide)
