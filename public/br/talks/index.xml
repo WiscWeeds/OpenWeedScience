@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Talks on Maxwel Coura Oliveira</title>
+    <link>/br/talks/</link>
+    <description>Recent content in Talks on Maxwel Coura Oliveira</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>br</language>
+    <lastBuildDate>Fri, 18 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/br/talks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Manejo de Plantas Daninhas, Identificação de Plantas Daninhas e Injúrias Causadas por Herbicidas</title>
+      <link>/br/talks/valortiza/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/br/talks/valortiza/</guid>
+      <description>Evento: Treinamento para os consultores da empresa Valoriza Agronogócios
+Local: Patos de Minas, Minas Gerais, Brasil</description>
+    </item>
+    
+    <item>
+      <title>Da resistência ao dicamba, o desafio na manejo de plantas daninhas nos EUA</title>
+      <link>/br/talks/imast/</link>
+      <pubDate>Wed, 26 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/br/talks/imast/</guid>
+      <description>Evento: 2nd International Meeting of Agrarian Science and Technology (IMAST)
+Local: Dracena, São Paulo, Brasil</description>
+    </item>
+    
+  </channel>
+</rss>

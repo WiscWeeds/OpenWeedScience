@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Postagens on ANÁLISE DE DADOS PLANTA DANINHA</title>
+    <link>/br/postagens/</link>
+    <description>Recent content in Postagens on ANÁLISE DE DADOS PLANTA DANINHA</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>br</language>
+    <lastBuildDate>Tue, 10 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/br/postagens/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Anova com controle de plantas daninhas</title>
+      <link>/br/postagens/anovabeta/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/br/postagens/anovabeta/</guid>
+      <description>Por Maxwel Coura Oliveira
+O controle de plantas daninhas com herbicidas é um experimento comum realizado na pesquisa de plantas daninhas. Geralmente, os experimentos são organizados em delineamento em blocos casualizados com vários tratamentos (herbicidas). Dias após o tratamento (DAT), uma nota de controle em percentagem (%) é dada às plantas daninhas. A percentagem no controle de plantas daninhas varia de 0% (plantas sem injúrias) e 100% (plantas completamente controladas).</description>
+    </item>
+    
+    <item>
+      <title>Chave para Identificação de Injúrias Causadas por Herbicidas</title>
+      <link>/br/postagens/chaveplantadaninha/</link>
+      <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/br/postagens/chaveplantadaninha/</guid>
+      <description>Por Maxwel Coura Oliveira e Rodrigo Werle
+Com o inicio da safra de milho e soja nas principais regiões produtoras no Brasil e o desafio atual no manejo de plantas daninhas devido ao aumento nos casos de resistência à herbicidas, produtores rurais estão diversificando cada vez mais o uso de herbicidas. Aumenta assim as chances de injúria de herbicida(s) causadas por resíduos de herbicida aplicado na cultura anterior (carryover), contaminação de tanque e deriva.</description>
+    </item>
+    
+    <item>
+      <title>Questionário - O Manejo de Culturas e Plantas Daninhas no Brasil</title>
+      <link>/br/postagens/questiona%CC%81rio-a-survey-manejo-de-planta-daninha-no-brasil/</link>
+      <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/br/postagens/questiona%CC%81rio-a-survey-manejo-de-planta-daninha-no-brasil/</guid>
+      <description>Quem somos nós? Eu sou Pesquisador Associado (pós-doc) na Universidade de Wisconsin-Madison, EUA, trabalhando com manejo de plantas daninhas junto com o Professor Assistente Rodrigo Werle.
+O desafio no manejo de plantas daninhas Nos EUA, o manejo de plantas daninhas resistentes à herbicidas tornou-se um dos principais desafios para a produção agrícola. Junto dos EUA, o Brasil é um dos principais produtores de soja, milho e algodão no mundo. Porém, tem sido reportado o cresimento alarmante no número de plantas daninhas resistentes à herbicidas no Brasil (existem 46 casos únicos de planta daninha resistentes, sendo 8 plantas daninhas resistentes ao herbicida glifosato).</description>
+    </item>
+    
+  </channel>
+</rss>
