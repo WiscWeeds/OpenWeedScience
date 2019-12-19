@@ -1,0 +1,402 @@
+---
+date: "2019-12-10"
+math: "true"
+title: ONE-WAY ANOVA OF WEED CONTROL DATA
+---
+
+
+
+<p>By Maxwel Coura Oliveira and Rodrigo Werle</p>
+<p>The weed control is likely the most common experiments and data analysis performed in the weed research discipline. In general, the goal is to investigate herbicides that promote the best weed control of target weed(s). Experiments is usually organized in a one-way randomized complete block design with multiple treatments (herbicides). At 21 (researcher choice) days after treatment (DAT), a percent (%) control rate is given to weed(s). The weed control rate varies from 0% (uninjured plants) and 100% (complete dead plants). Therefore, before setting up the experiments, the researcher know that the results will range from 0 to 100%.</p>
+<p>This is nonparametric statistics, which does not follow a normal (gaussean) distribution. Normal distribution is a assumption of the ANOVA. We will use the <em>beta distribution</em> (logit scale), which is a family of continuous probability distributions defined on the interval [0, 1]. The weed control rates should be mutate to the interval 0 and 1. For example, if the weed control of Palmer amaranth is 90%, it should be listed as 0.90 in your excel spreadsheet file. Also, <em>beta distribution</em> will not accept 0 and 1 values. Thus, weed control of 0% and 100% must be changed to 0.01 and 0.99, respectively.</p>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<ul>
+<li><p>Download <strong>R</strong> for your laptop system from: <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a></p></li>
+<li><p>Download <strong>RStudio</strong> for your laptop system from: <a href="https://rstudio.com" class="uri">https://rstudio.com</a></p></li>
+</ul>
+<div id="create-a-r-project-file" class="section level2">
+<h2>Create a R Project file</h2>
+<ul>
+<li>Click in File -&gt; New project… -&gt; New directory -&gt; New Project -&gt; Save the R work directory anywhere you want in your laptop.</li>
+</ul>
+<p>The saved file will have a R project and you should copy and paste all your raw data (excel file) in the same work directory.</p>
+<ul>
+<li>Click in File -&gt; New File -&gt; R script (.R)</li>
+</ul>
+<p>or</p>
+<ul>
+<li>Click in File -&gt; New File -&gt; R markdown… (.Rmd)</li>
+</ul>
+<p>Althouth I like working on R markdown, R script is easier to work in R studio but R markdown has more advantages.</p>
+</div>
+<div id="install-packages" class="section level2">
+<h2>Install packages</h2>
+<p>Copy and paste the following codes in your R script or R markdown.</p>
+<pre><code>install.packages(tidyverse)
+install.packages(glmmTMB)
+install.packages(lme4)
+install.packages(lmerTest)
+install.packages(emmeans)
+install.packages(RCurl)
+install.packages(car)
+install.packages(kableExtra)</code></pre>
+<p>Run all codes below by clicking in the Run option in the top right corner of you R script or R markdown. These codes will install the necessary packages for analyzing weed control (%) experiments. Once you install these packages you will not need to install them every time you work in Rstudio, unless you update R or Rstudio.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<pre><code>library(tidyverse)
+library(RCurl)</code></pre>
+<p>The data used for the exercise is from a published <a href="https://www.doi.org/10.1017/wet.2016.4">manuscript</a> of a waterhemp (<em>Amaranthus tuberculatus</em>) biotype control (%) with postemergence herbicides. Here for the exercise, herbicides are named A, B, C, D, and E. Run the following codes below to load the data into R.</p>
+<pre class="r"><code>df_path &lt;- getURL(&quot;https://raw.githubusercontent.com/maxwelco/Anova-beta/master/data/control.csv&quot;)
+
+control &lt;- read_csv(df_path)</code></pre>
+<p>After run the codes above, the data should be in the <em>control</em>.</p>
+<pre class="r"><code>control</code></pre>
+<pre><code>## # A tibble: 30 x 4
+##     year herbicide   rep control
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1  2013 A             1    0.99
+##  2  2013 A             2    0.97
+##  3  2013 A             3    0.96
+##  4  2013 B             1    0.99
+##  5  2013 B             2    0.99
+##  6  2013 B             3    0.97
+##  7  2013 C             1    0.95
+##  8  2013 C             2    0.9 
+##  9  2013 C             3    0.95
+## 10  2013 D             1    0.5 
+## # … with 20 more rows</code></pre>
+<p>The data have year (2013 and 2014), herbicide (A, B, C, D, E), rep (1, 2 ,3), and control of waterhemp (proportions).</p>
+</div>
+</div>
+<div id="bartlett-test-of-homogeneity-of-variances" class="section level1">
+<h1>Bartlett Test Of Homogeneity Of Variances</h1>
+<p>Performs Bartlett’s test of the null that the variances in each of the year are the same.</p>
+<blockquote>
+<p>bartlett.test function</p>
+</blockquote>
+<pre class="r"><code>bartlett.test(control ~ year, data=control)</code></pre>
+<pre><code>## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  control by year
+## Bartlett&#39;s K-squared = 0.00026615, df = 1, p-value = 0.987</code></pre>
+<p>Results shows p-value = 0.987, the null hypothesis is accepted, meaning that variances in each year are the same.</p>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<ul>
+<li>Run the packages below</li>
+</ul>
+<pre><code>library(glmmTMB)
+library(lme4)
+library(lmerTest)</code></pre>
+<ul>
+<li><p>Generalized Linear Mixed Models using Template Model Builder by Mollie Brooks</p></li>
+<li><p>Beta family with logit</p></li>
+<li><p>Mixed model</p></li>
+</ul>
+<p>The model has control as a response variable, herbicide as fixed effects, and year (nested with rep) as random effects.</p>
+<blockquote>
+<p>glmmTMB function</p>
+</blockquote>
+<pre class="r"><code>model &lt;- glmmTMB(control ~ herbicide + (1|year/rep), beta_family(link = &quot;logit&quot;), data=control)</code></pre>
+</div>
+<div id="anova" class="section level2">
+<h2>Anova</h2>
+<ul>
+<li>Run the package below</li>
+</ul>
+<pre><code>library(car)</code></pre>
+<blockquote>
+<p><em>Anova</em> function or <em>Anova.glmmTMB</em> function</p>
+</blockquote>
+<pre class="r"><code>Anova(model)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: control
+##            Chisq Df Pr(&gt;Chisq)    
+## herbicide 212.35  4  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The <em>P</em>-value &lt; 2.2e-16; there is a lower evidence that a difference of some magnitude between herbicides tested could occur by chance alone assuming null hypothesis is true.</p>
+</div>
+<div id="cheking-the-herbicide-control-on-waterhemp" class="section level2">
+<h2>Cheking the herbicide control on waterhemp</h2>
+<ul>
+<li>Run the package below</li>
+</ul>
+<pre><code>library(emmeans)</code></pre>
+<div id="interaction-style-plots-for-estimated-marginal-means-emmip" class="section level4">
+<h4>Interaction-Style Plots For Estimated Marginal Means (emmip)</h4>
+<ul>
+<li><p>type=“response”, herbicide and intervals back from the logit scale</p></li>
+<li><p>coord_flip(), inverted the axis (better visualization)</p></li>
+</ul>
+<blockquote>
+<p><em>emmip</em> function</p>
+</blockquote>
+<pre class="r"><code>emmip(model, ~herbicide, type=&quot;response&quot;) + coord_flip()</code></pre>
+<p><img src="/posts/anovabeta_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>This figure helps to visualize the herbicide effect on waterhemp control. It is useful in treatments arranged in factorial design.</p>
+</div>
+<div id="estimated-marginal-means-least-squares-means" class="section level4">
+<h4>Estimated Marginal Means (Least-Squares Means)</h4>
+<ul>
+<li><p>type=“response”, herbicide and intervals back from the logit scale</p></li>
+<li><p>cont=“pairwise”, comparisons between each herbicide treatments</p></li>
+<li><p>adjust=“none”, fisher’s least significant difference (try tukey)</p></li>
+</ul>
+<p>The lsmeans provided the weed control (prop), SE (standard error) and confidence intervals (lower.CL and upper.CL). Moreover, lsmeans provides the pairwise contrasts between treatments (herbicides).</p>
+<blockquote>
+<p><em>emmeans</em> function</p>
+</blockquote>
+<pre class="r"><code>lsmeans &lt;- emmeans(model, ~ herbicide, cont=&quot;pairwise&quot;, adjust=&quot;none&quot;, type=&quot;response&quot;, alpha=0.05)
+
+lsmeans</code></pre>
+<pre><code>## $emmeans
+##  herbicide  prop      SE df lower.CL upper.CL
+##  A         0.975 0.00793 22    0.952    0.987
+##  B         0.964 0.01011 22    0.936    0.980
+##  C         0.915 0.01618 22    0.874    0.943
+##  D         0.542 0.02999 22    0.479    0.603
+##  E         0.871 0.01975 22    0.824    0.907
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the logit scale 
+## 
+## $contrasts
+##  contrast odds.ratio      SE df t.ratio p.value
+##  A / B         1.488  0.6268 22  0.943  0.3559 
+##  A / C         3.677  1.3992 22  3.422  0.0024 
+##  A / D        33.295 11.6335 22 10.033  &lt;.0001 
+##  A / E         5.831  2.1417 22  4.801  0.0001 
+##  B / C         2.472  0.8619 22  2.595  0.0165 
+##  B / D        22.379  6.9838 22  9.960  &lt;.0001 
+##  B / E         3.919  1.3066 22  4.097  0.0005 
+##  C / D         9.055  2.1694 22  9.196  &lt;.0001 
+##  C / E         1.586  0.4272 22  1.711  0.1011 
+##  D / E         0.175  0.0373 22 -8.175  &lt;.0001 
+## 
+## Tests are performed on the log odds ratio scale</code></pre>
+</div>
+<div id="plot-lsmeans" class="section level4">
+<h4>PLOT LSMEANS</h4>
+<ul>
+<li><p>comparisons=TRUE, comparisons between treatments with red arrows</p></li>
+<li><p>type=“response”, herbicide and intervals back from the logit scale</p></li>
+<li><p>alpha=0.05, significance level to use in constructing comparison arrows</p></li>
+<li><p>adjust=“none”, Fisher’s least significant difference (try tukey)</p></li>
+</ul>
+<blockquote>
+<p><em>plot</em> function</p>
+</blockquote>
+<pre class="r"><code>plot(lsmeans, ~ herbicide, comparisons=TRUE, type=&quot;response&quot;, alpha=0.05, adjust=&quot;none&quot;)</code></pre>
+<p><img src="/posts/anovabeta_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>The black dot is the mean of herbicide waterhemp control and purple is the confidence intervals. Red arrow is a comparison amongst treatments, if a red arrow do not overlap, treatments are different. See contrasts from lsmeans to double check.</p>
+</div>
+</div>
+<div id="extract-and-display-information-on-all-pairwise-comparisons-of-estimated-marginal-means" class="section level2">
+<h2>Extract And Display Information On All Pairwise Comparisons Of Estimated Marginal Means</h2>
+<ul>
+<li><p>alpha=0.05, numeric value giving the significance level for the comparisons</p></li>
+<li><p>Letters=letters, display letter grouping treatments according to pairwise comparisons</p></li>
+<li><p>adjust=“none”, fisher’s least significant difference (try tukey)</p></li>
+<li><p>reversed = TRUE, the order of use of the letters is reversed</p></li>
+</ul>
+<blockquote>
+<p><em>CLD</em> function</p>
+</blockquote>
+<pre class="r"><code>cld &lt;-CLD(lsmeans, alpha=0.05, Letters=letters, adjust=&quot;none&quot;, reversed = TRUE)
+
+cld </code></pre>
+<pre><code>##  herbicide  prop      SE df lower.CL upper.CL .group
+##  A         0.975 0.00793 22    0.952    0.987  a    
+##  B         0.964 0.01011 22    0.936    0.980  a    
+##  C         0.915 0.01618 22    0.874    0.943   b   
+##  E         0.871 0.01975 22    0.824    0.907   b   
+##  D         0.542 0.02999 22    0.479    0.603    c  
+## 
+## Confidence level used: 0.95 
+## Intervals are back-transformed from the logit scale 
+## Tests are performed on the log odds ratio scale 
+## significance level used: alpha = 0.05</code></pre>
+<div id="warning" class="section level6">
+<h6>Warning</h6>
+<pre><code>&quot;The CLD function and methods are deprecated. Compact-letter displays (CLDs) encourage a misleading interpretation of significance testing by visually grouping means whose comparisons have P &gt; alpha as though they are equal. However, failing to prove two means are different does not prove that they are the same. In addition, CLDs make a hard distinction between P values nearly equal to alpha but on opposite sides.&quot;</code></pre>
+</div>
+</div>
+<div id="figure" class="section level2">
+<h2>Figure</h2>
+<div id="dot-plot-with-confidence-intervals" class="section level5">
+<h5>Dot plot with confidence intervals</h5>
+<p>Since <em>CLD</em> function is deprecated, I recommend use the lsmeans to create a figure.</p>
+<pre class="r"><code>nd &lt;- as.data.frame(lsmeans$emmeans)</code></pre>
+<p>Use <em>nd</em> to plot a figure.</p>
+<blockquote>
+<p>ggplot function</p>
+</blockquote>
+<pre class="r"><code>ggplot(nd, aes(x=herbicide, y=prop*100, color=herbicide)) + 
+  geom_point(size=4) + ylim(0,100) +
+  scale_color_manual(values=c(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;orange&quot;, &quot;purple&quot;)) +
+  theme_bw() +  labs(y=&quot;Waterhemp control (%)&quot;, x=&quot;Herbicides&quot;) +
+  geom_linerange(aes(ymin  =  lower.CL*100, ymax  =  upper.CL*100), size=1.5) + 
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=15),
+        legend.position = &quot;none&quot;) </code></pre>
+<p><img src="/posts/anovabeta_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>The mean and confidence intervals of each herbicide are displayed in a <em>ggplot</em> figure.</p>
+</div>
+<div id="bar-plot-with-letters" class="section level5">
+<h5>Bar plot with letters</h5>
+<p>If you like presenting barplots with letters. Here is how you should proceed.</p>
+<pre class="r"><code>ggplot(cld, aes(x=herbicide, y=prop*100, fill=herbicide, label=.group)) + 
+  geom_bar(stat=&quot;identity&quot;) + ylim(0,105) +
+  scale_fill_manual(values=c(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;orange&quot;, &quot;purple&quot;)) +
+  theme_bw() +  labs(y=&quot;Waterhemp control (%)&quot;, x=&quot;Herbicides&quot;) +
+  geom_text(nudge_y = 7, size=8) + 
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=15),
+        legend.position = &quot;none&quot;) </code></pre>
+<p><img src="/posts/anovabeta_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+<div id="table" class="section level2">
+<h2>Table</h2>
+<ul>
+<li>Run the package below</li>
+</ul>
+<pre><code>library(kableExtra)</code></pre>
+<p>This is a very simple table generator.</p>
+<blockquote>
+<p><em>kable</em> function</p>
+</blockquote>
+<pre class="r"><code>kable(nd)</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+herbicide
+</th>
+<th style="text-align:right;">
+prop
+</th>
+<th style="text-align:right;">
+SE
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+lower.CL
+</th>
+<th style="text-align:right;">
+upper.CL
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+0.9752142
+</td>
+<td style="text-align:right;">
+0.0079316
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.9522053
+</td>
+<td style="text-align:right;">
+0.9872942
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+0.9635645
+</td>
+<td style="text-align:right;">
+0.0101101
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.9357085
+</td>
+<td style="text-align:right;">
+0.9796141
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+0.9145302
+</td>
+<td style="text-align:right;">
+0.0161835
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.8744471
+</td>
+<td style="text-align:right;">
+0.9426558
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:right;">
+0.5416446
+</td>
+<td style="text-align:right;">
+0.0299928
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.4791177
+</td>
+<td style="text-align:right;">
+0.6028868
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+0.8709271
+</td>
+<td style="text-align:right;">
+0.0197498
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+0.8241647
+</td>
+<td style="text-align:right;">
+0.9066617
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
