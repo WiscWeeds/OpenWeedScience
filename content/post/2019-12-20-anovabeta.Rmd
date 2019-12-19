@@ -5,7 +5,7 @@ author:
 - Rodrigo Werle
 date: 2019-12-20T21:13:14-05:00
 categories: ["Post"]
-tags: ["anova", "plot", "weed control", "non-parametric"]
+tags: ["anova", "plot", "weed control"]
 ---
 
 ```{r include=FALSE}
