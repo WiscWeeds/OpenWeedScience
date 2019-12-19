@@ -1,52 +1,28 @@
 ---
-description: about
-slug: about
-thumbnail: images/tn.png
-title: Who am I?
+title: Open Weed Science
 ---
 
----------------------------
-I am current a postdoctoral research associate at the University of Wisconsin-Madison. 
+# About Open Weed Science
 
----------------------------
+Under development
 
 
-# Interests
+# Statement of Purpose
 
----------------------------
+**Inform**:  Under development
 
-- Weed Management
+**Mission**: Under development
 
-- Weed Ecology 
+**Values**: Under development
 
-- Weed Biology
+# The Open Weed Science Team
 
-- Genetics
 
-- Data science 
-
-- Statistics
-
-- Data visualization
-
----------------------------
-
-# Hobbies
-
----------------------------
-
-- Climbing
-
-- Running
-
-- Hiking
-
-- Biking
-
-- Traveling
-
-- Reading
-
-- Movies
-
----------------------------
+| Member                | Role       | Domain(s)                     | Institute                       | Country | Contact               |
+|-----------------------|------------|-------------------------------|---------------------------------|---------|-----------------------|
+| Maxwel C Oliveira     | Leadership | Modeling, Data Visualization  | University of Wisconsin-Madison | USA     | maxoliveira@wisc.edu  |
+| Brendan C S Alexander | Member     | Modeling, Applied Statistics  | University of Illinois-UC       | USA     | bca2@illinois.edu     |
+| Ethann R Barnes       | Member     | Modeling, Data Visualization  | GreenLight Biosciences, Inc.    | USA     |                       |
+| Lucas K Bobadilla     | Member     | Bioinformatics                | University of Illinois-UC       | USA     | lucask3@illinois.edu  |
+| O Adewale Ospitan     | Member     | Modeling, Meta-analysis       | University of California-Davis  | USA     | oosipitan@ucdavis.edu |
+| Rodrigo Werle         | Member     | Modeling, Weed Management     | University of Wisconsin-Madison | USA     | rwerle@wisc.edu       |

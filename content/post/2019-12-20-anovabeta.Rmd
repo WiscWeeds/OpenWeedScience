@@ -23,7 +23,7 @@ library(car)
 
 Assessments of visual weed control in response to herbicide treatments is likely the most common experiment and data analysis conducted within the Weed Science discipline. The goal of these experiments is to investigate herbicides that promote the best level of control of targeted weed species. These experiments are usually organized in a one-way randomized complete block design with multiple treatments (herbicides). At a pre-established  number of days after treatment (DAT; researcher choice), a percent (%) visual control rate is given to each targeted weed. The weed control rate varies from 0% (no weed control) to 100% (complete weed control). Therefore, before setting up the experiments, the researcher is aware that the results will range from 0 to 100%. 
 
-This type of dataset typically does not follow a normal (Gaussian) distribution and should be analyzed as nonparametric data. Herein we use the *beta distribution* (logit scale), a continuous probability distribution where response variable values range from 0 to 1. Before starting the analysis, the weed control rates (0-100%) should be converted to the interval 0-1. For example, if the weed control of Palmer amaranth is 90%, it should be listed as 0.900 in your excel spreadsheet file. Also, *beta distribution* will not accept 0 nor 1 values. Thus, weed control of 0% and 100% should be adjusted to 0.001 and 0.999, respectively.
+This type of dataset typically does not follow a normal (Gaussian) distribution. Herein we use the *beta distribution* (logit scale), a continuous probability distribution where response variable values range from 0 to 1. Before starting the analysis, the weed control rates (0-100%) should be converted to the interval 0-1. For example, if the weed control of Palmer amaranth is 90%, it should be listed as 0.900 in your excel spreadsheet file. Also, *beta distribution* will not accept 0 nor 1 values. Thus, weed control of 0% and 100% should be adjusted to 0.001 and 0.999, respectively.
  
 
 # Getting started
@@ -86,35 +86,41 @@ The data used for this exercise is from a published [manuscript](https://www.doi
 ```{r}
 df_path <- getURL("https://raw.githubusercontent.com/openweedsci/data/master/posts/control.csv")
 
-control <- read_csv(df_path)
+weedcont <- read_csv(df_path)
 ```
 
 
-After running the codes above, the data should appear as *control* (“control” was chosen as the name of the dataset; you could have called it “data” or something else).
+After running the codes above, the data should appear as *weedcont* (“control” was chosen as the name of the dataset; you could have called it “data” or something else).
 
 
 ```{r}
-control
+weedcont
 ```
 
 
-The dataset contains 2 years (2013 and 2014), 5 herbicides (A, B, C, D, E), 3 reps (1, 2 ,3), and visual control of waterhemp (converted to proportions [0.001-0.999] already).
+The dataset contains 2 years (2013 and 2014), 5 herbicides (A, B, C, D, E), 3 reps (1, 2  and 3), and visual control of waterhemp (converted to proportions [0.001-0.999] already).
 
 
-# Fligner test of homogeneity of variances 
+# Levene's Test for Homogeneity of Variance
 
-Performs Fligner's test of the null that the variances amongst herbicide treatments are the same. The test is needed to check a ANOVA assumption.
+- Run the package below
 
-- non-parametric test
+```yaml
+library(car)
+```
+
+Levene's Test of the null that the variances amongst herbicide treatments are the same.
+
+- Levene’s test is robust to departures from normality.
 
 > fligner.test function
 
 ```{r}
-fligner.test(control$control, control$herbicide)
+leveneTest(weedcont$control,  weedcont$herbicide)
 ```
 
 
-Results show p-value = 0.6086 thus the null hypothesis is accepted indicating that variances amongst herbicide treatments are the same.
+Results show p-value = 0.6197 thus the null hypothesis is accepted indicating that variances amongst herbicide treatments are the same.
 
 
 # Model
