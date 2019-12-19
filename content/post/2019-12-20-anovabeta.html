@@ -13,7 +13,7 @@ tags: ["anova", "plot", "weed control", "non-parametric"]
 <div id="background" class="section level1">
 <h1>Background</h1>
 <p>Assessments of visual weed control in response to herbicide treatments is likely the most common experiment and data analysis conducted within the Weed Science discipline. The goal of these experiments is to investigate herbicides that promote the best level of control of targeted weed species. These experiments are usually organized in a one-way randomized complete block design with multiple treatments (herbicides). At a pre-established number of days after treatment (DAT; researcher choice), a percent (%) visual control rate is given to each targeted weed. The weed control rate varies from 0% (no weed control) to 100% (complete weed control). Therefore, before setting up the experiments, the researcher is aware that the results will range from 0 to 100%.</p>
-<p>This type of dataset typically does not follow a normal (Gaussian) distribution and should be analyzed as nonparametric data. Herein we use the <em>beta distribution</em> (logit scale), a continuous probability distribution where response variable values range from 0 to 1. Before starting the analysis, the weed control rates (0-100%) should be converted to the interval 0-1. For example, if the weed control of Palmer amaranth is 90%, it should be listed as 0.900 in your excel spreadsheet file. Also, <em>beta distribution</em> will not accept 0 nor 1 values. Thus, weed control of 0% and 100% should be adjusted to 0.001 and 0.999, respectively.</p>
+<p>This type of dataset typically does not follow a normal (Gaussian) distribution. Herein we use the <em>beta distribution</em> (logit scale), a continuous probability distribution where response variable values range from 0 to 1. Before starting the analysis, the weed control rates (0-100%) should be converted to the interval 0-1. For example, if the weed control of Palmer amaranth is 90%, it should be listed as 0.900 in your excel spreadsheet file. Also, <em>beta distribution</em> will not accept 0 nor 1 values. Thus, weed control of 0% and 100% should be adjusted to 0.001 and 0.999, respectively.</p>
 </div>
 <div id="getting-started" class="section level1">
 <h1>Getting started</h1>
@@ -61,9 +61,9 @@ library(RCurl)</code></pre>
 <p>The data used for this exercise is from a published <a href="https://www.doi.org/10.1017/wet.2016.4">manuscript</a> by Oliveira et al. 2017 investigating control of a waterhemp (<em>Amaranthus tuberculatus</em>) population with several with several postemergence herbicides. For this exercise, herbicides are named A, B, C, D, and E. In addition, only results from year 2014 is presented. Run the following codes to load the data into R:</p>
 <pre class="r"><code>df_path &lt;- getURL(&quot;https://raw.githubusercontent.com/openweedsci/data/master/posts/control.csv&quot;)
 
-control &lt;- read_csv(df_path)</code></pre>
-<p>After running the codes above, the data should appear as <em>control</em> (“control” was chosen as the name of the dataset; you could have called it “data” or something else).</p>
-<pre class="r"><code>control</code></pre>
+weedcont &lt;- read_csv(df_path)</code></pre>
+<p>After running the codes above, the data should appear as <em>weedcont</em> (“control” was chosen as the name of the dataset; you could have called it “data” or something else).</p>
+<pre class="r"><code>weedcont</code></pre>
 <pre><code>## # A tibble: 15 x 4
 ##     year herbicide   rep control
 ##    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
@@ -82,24 +82,27 @@ control &lt;- read_csv(df_path)</code></pre>
 ## 13  2014 E             1    0.9 
 ## 14  2014 E             2    0.85
 ## 15  2014 E             3    0.8</code></pre>
-<p>The dataset contains 2 years (2013 and 2014), 5 herbicides (A, B, C, D, E), 3 reps (1, 2 ,3), and visual control of waterhemp (converted to proportions [0.001-0.999] already).</p>
+<p>The dataset contains 2 years (2013 and 2014), 5 herbicides (A, B, C, D, E), 3 reps (1, 2 and 3), and visual control of waterhemp (converted to proportions [0.001-0.999] already).</p>
 </div>
-<div id="fligner-test-of-homogeneity-of-variances" class="section level1">
-<h1>Fligner test of homogeneity of variances</h1>
-<p>Performs Fligner’s test of the null that the variances amongst herbicide treatments are the same. The test is needed to check a ANOVA assumption.</p>
+<div id="levenes-test-for-homogeneity-of-variance" class="section level1">
+<h1>Levene’s Test for Homogeneity of Variance</h1>
 <ul>
-<li>non-parametric test</li>
+<li>Run the package below</li>
+</ul>
+<pre class="yaml"><code>library(car)</code></pre>
+<p>Levene’s Test of the null that the variances amongst herbicide treatments are the same.</p>
+<ul>
+<li>Levene’s test is robust to departures from normality.</li>
 </ul>
 <blockquote>
 <p>fligner.test function</p>
 </blockquote>
-<pre class="r"><code>fligner.test(control$control, control$herbicide)</code></pre>
-<pre><code>## 
-##  Fligner-Killeen test of homogeneity of variances
-## 
-## data:  control$control and control$herbicide
-## Fligner-Killeen:med chi-squared = 2.7034, df = 4, p-value = 0.6086</code></pre>
-<p>Results show p-value = 0.6086 thus the null hypothesis is accepted indicating that variances amongst herbicide treatments are the same.</p>
+<pre class="r"><code>leveneTest(weedcont$control,  weedcont$herbicide)</code></pre>
+<pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
+##       Df F value Pr(&gt;F)
+## group  4  0.6828 0.6197
+##       10</code></pre>
+<p>Results show p-value = 0.6197 thus the null hypothesis is accepted indicating that variances amongst herbicide treatments are the same.</p>
 </div>
 <div id="model" class="section level1">
 <h1>Model</h1>
@@ -118,7 +121,7 @@ library(lmerTest)</code></pre>
 <blockquote>
 <p>glmmTMB function</p>
 </blockquote>
-<pre class="r"><code>model &lt;- glmmTMB(control ~ herbicide + (1|rep), beta_family(link = &quot;logit&quot;), data=control)</code></pre>
+<pre class="r"><code>model &lt;- glmmTMB(control ~ herbicide + (1|rep), beta_family(link = &quot;logit&quot;), data=weedcont)</code></pre>
 </div>
 <div id="anova" class="section level1">
 <h1>Anova</h1>

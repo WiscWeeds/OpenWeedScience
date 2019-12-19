@@ -115,7 +115,7 @@ Levene's Test of the null that the variances amongst herbicide treatments are th
 
 > fligner.test function
 
-```{r}
+```{r warning=FALSE}
 leveneTest(weedcont$control,  weedcont$herbicide)
 ```
 
@@ -144,7 +144,7 @@ The model has control as a response variable, herbicide as fixed effects, and re
 > glmmTMB function
 
 ```{r}
-model <- glmmTMB(control ~ herbicide + (1|rep), beta_family(link = "logit"), data=control)
+model <- glmmTMB(control ~ herbicide + (1|rep), beta_family(link = "logit"), data=weedcont)
 ```
 
 
